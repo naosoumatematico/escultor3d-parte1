@@ -73,6 +73,26 @@ void Sculptor::cutVoxel(int x, int y, int z){
     v[x][y][z].show = false;
 }
 
+void Sculptor::putBox(int x0, int x1, int y0, int y1, int z0, int z1){
+    for(int x = x0; x <= x1; x++){
+        for(int y = y0; y <= y1; y++){
+            for(int z = z0; z <= z1; z++){
+                putVoxel(x, y, z);
+            }
+        }
+    }
+}
+
+void Sculptor::cutBox(int x0, int x1, int y0, int y1, int z0, int z1){
+    for(int x = x0; x <= x1; x++){
+        for(int y = y0; y <= y1; y++){
+            for(int z = z0; z <= z1; z++){
+                cutVoxel(x, y, z);
+            }
+        }
+    }
+}
+
 // metodo completamente vibecodado; nao confio nem um pouco (queria so testar os outros metodos visualmente)
 void Sculptor::writeOFF(const char* filename)
 {
