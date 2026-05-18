@@ -64,3 +64,17 @@ void Sculptor::setColor(float r, float g, float b, float alpha){
     this->b = b;
     this->a = alpha;
 }
+
+// implementacao do metodo que ativa um voxel em uma coordenada dada e atribui a ele a cor definida no setColor
+void Sculptor::putVoxel(int x, int y, int z){
+    // verificacao se o Voxel esta dentro da regiao alocada
+    if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz){
+        return;
+    }else{
+        v[x][y][z].show = true;
+        v[x][y][z].r = r;
+        v[x][y][z].g = g;
+        v[x][y][z].b = b;
+        v[x][y][z].a = a;
+    }
+}
