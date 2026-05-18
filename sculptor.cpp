@@ -1,80 +1,119 @@
 // arquivo de definicao da classe; aqui ocorre a implementacao dos metodos da classe
-#include "sculptor.h" // inclusao do header da classe
 
-//implementacao do construtor da classe
-Sculptor::Sculptor(int _nx, int _ny, int _nz){
-    // atribuicao das dimensoes da matriz 3D de voxels
+#include <iostream>
+#include "sculptor.h"
+
+using namespace std;
+
+// implementacao do construtor da classe
+Sculptor::Sculptor(int _nx, int _ny, int _nz)
+{
     nx = _nx;
     ny = _ny;
     nz = _nz;
 
-    // processo de alocacao dinamica da matriz 3D
-
     // alocacao do eixo x
-    v = new Voxel** [nx];
+    v = new Voxel**[nx];
 
-    // alocacao do eixo y; 
-    for(int i = 0; i < nx; i++){
-        v[i] = new Voxel* [ny];
+    // alocacao do eixo y
+    for(int i = 0; i < nx; i++)
+    {
+        v[i] = new Voxel*[ny];
     }
 
     // alocacao do eixo z
-    for(int i = 0; i < nx; i++){
-        for(int j = 0; j < ny; j++){
-            v[i][j] = new Voxel [nz];
+    for(int i = 0; i < nx; i++)
+    {
+        for(int j = 0; j < ny; j++)
+        {
+            v[i][j] = new Voxel[nz];
         }
     }
 
-    // os voxels sao inicialmente desativados
-    for(int i = 0; i < nx; i++){
-        for(int j = 0; j < ny; j++){
-            for(int k = 0; k < nz; k++){
+    // inicializacao dos voxels
+    for(int i = 0; i < nx; i++)
+    {
+        for(int j = 0; j < ny; j++)
+        {
+            for(int k = 0; k < nz; k++)
+            {
                 v[i][j][k].show = false;
             }
         }
     }
+
+    cout << "[Sculptor] objeto criado com dimensoes ("
+         << nx << "," << ny << "," << nz << ")\n";
 }
 
 // implementacao do destrutor da classe
-Sculptor::~Sculptor(){
-    // no destrutor, a memoria alocada deve ser liberada
-    // o processo acontece "de tras pra frente"
-
+Sculptor::~Sculptor()
+{
     // liberacao do eixo z
-    for(int i = 0; i < nx; i++){
-        for(int j = 0; j < ny; j++){
+    for(int i = 0; i < nx; i++)
+    {
+        for(int j = 0; j < ny; j++)
+        {
             delete[] v[i][j];
         }
     }
 
     // liberacao do eixo y
-    for(int i = 0; i < nx; i++){
+    for(int i = 0; i < nx; i++)
+    {
         delete[] v[i];
     }
 
     // liberacao do eixo x
     delete[] v;
+
+    cout << "[Sculptor] memoria liberada com sucesso\n";
 }
 
-// implementacao do metodo que define a cor atual do desenho
-void Sculptor::setColor(float r, float g, float b, float alpha){
-    // usando this pois os argumentos tem os mesmos nomes que os atributos privados da classe
+// define a cor atual do desenho
+void Sculptor::setColor(float r, float g, float b, float alpha)
+{
     this->r = r;
     this->g = g;
     this->b = b;
     this->a = alpha;
+
+    cout << "[setColor] cor definida: ("
+         << r << "," << g << "," << b << "," << alpha << ")\n";
 }
 
-// implementacao do metodo que ativa um voxel em uma coordenada dada e atribui a ele a cor definida no setColor
-void Sculptor::putVoxel(int x, int y, int z){
-    // verificacao se o Voxel esta dentro da regiao alocada
-    if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz){
+// ativa um voxel
+void Sculptor::putVoxel(int x, int y, int z)
+{
+    if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
+    {
+        cout << "[putVoxel] coordenada invalida: ("
+             << x << "," << y << "," << z << ")\n";
         return;
-    }else{
-        v[x][y][z].show = true;
-        v[x][y][z].r = r;
-        v[x][y][z].g = g;
-        v[x][y][z].b = b;
-        v[x][y][z].a = a;
     }
+
+    v[x][y][z].show = true;
+    v[x][y][z].r = r;
+    v[x][y][z].g = g;
+    v[x][y][z].b = b;
+    v[x][y][z].a = a;
+
+    cout << "[putVoxel] ativado voxel em ("
+         << x << "," << y << "," << z << ")\n";
+}
+
+// desativa um voxel
+void Sculptor::cutVoxel(int x, int y, int z)
+{
+    if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
+    {
+        cout << "[cutVoxel] coordenada invalida: ("
+             << x << "," << y << "," << z << ")\n";
+        return;
+    }
+
+    v[x][y][z].show = false;
+
+    cout << "[cutVoxel] desativado voxel em ("
+         << x << "," << y << "," << z << ")\n";
 }
