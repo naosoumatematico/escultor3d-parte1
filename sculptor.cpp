@@ -42,7 +42,7 @@ Sculptor::Sculptor(int _nx, int _ny, int _nz)
         }
     }
 
-    cout << "[Construtor] objeto criado com dimensoes (" << nx << "," << ny << "," << nz << ")\n";
+    cout << "[Construtor] objeto criado com dimensoes (" << nx << "," << ny << "," << nz << ")" << endl;
 }
 
 // implementacao do destrutor da classe
@@ -66,7 +66,7 @@ Sculptor::~Sculptor()
     // liberacao do eixo x
     delete[] v;
 
-    cout << "[Destrutor] memoria liberada com sucesso\n";
+    cout << "[Destrutor] memoria liberada com sucesso" << endl;
 }
 
 // define a cor atual do desenho
@@ -78,7 +78,7 @@ void Sculptor::setColor(float r, float g, float b, float alpha)
     this->a = alpha;
 
     cout << "[setColor] cor definida: ("
-         << r << "," << g << "," << b << "," << alpha << ")\n";
+         << r << "," << g << "," << b << "," << alpha << ")" << endl;
 }
 
 // ativa um voxel
@@ -86,7 +86,7 @@ void Sculptor::putVoxel(int x, int y, int z)
 {
     if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
     {
-        cout << "[putVoxel] coordenada invalida: (" << x << "," << y << "," << z << ")\n";
+        cout << "[putVoxel] coordenada invalida: (" << x << "," << y << "," << z << ")" << endl;
         return;
     }
 
@@ -97,7 +97,7 @@ void Sculptor::putVoxel(int x, int y, int z)
     v[x][y][z].a = a;
 
     cout << "[putVoxel] ativado voxel em ("
-         << x << "," << y << "," << z << ")\n";
+         << x << "," << y << "," << z << ")" << endl;
 }
 
 // desativa um voxel
@@ -105,11 +105,11 @@ void Sculptor::cutVoxel(int x, int y, int z)
 {
     if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
     {
-        cout << "[cutVoxel] coordenada invalida: (" << x << "," << y << "," << z << ")\n";
+        cout << "[cutVoxel] coordenada invalida: (" << x << "," << y << "," << z << ")" << endl;
         return;
     }
 
     v[x][y][z].show = false;
 
-    cout << "[cutVoxel] desativado voxel em (" << x << "," << y << "," << z << ")\n";
+    cout << "[cutVoxel] desativado voxel em (" << x << "," << y << "," << z << ")" << endl;
 }
