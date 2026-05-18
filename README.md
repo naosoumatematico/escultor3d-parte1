@@ -21,6 +21,8 @@ geomview nome_do_arquivo.off
 
 ## dicas de visualização
 
+inspect -> cameras -> [v~] Software Shading; deixa as cores mais bonitas
 inspect -> cameras -> background color -> HSV; troca de HSV para RGB e puxa todos os sliders para a direita (o fundo fica branco)
 inspect -> material -> [aT] Translucent; se o desenho usar transparencia, ela aparece na visualização ao marcar essa caixa
 inspect -> appearance -> [ae] Edges; as arestas ficam visíveis, facilitando visualizar cada Voxel
+inspect -> appearance -> [ab] BBoxes; tira o contorno que mostra toda a regiao alocada e usada no desenho
