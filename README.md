@@ -10,3 +10,17 @@ implementação da classe Sculptor, um escultor de modelos 3D com voxels que exp
 no terminal, deve-se acessar a pasta onde estão os arquivos sculptor.h; sculptor.cpp e sculptor-main.cpp; após isso, executar o seguinte comando:
 
 g++ sculptor.cpp sculptor-main.cpp -o sculptor-main
+
+# como visualizar e dicas de visualização (linux)
+
+apos isso, o arquivo proveniente da compilação pode ser executado com ./sculptor-main
+
+na pasta, vai surgir um arquivo .off que pode ser visualizado com o comando
+
+geomview nome_do_arquivo.off
+
+## dicas de visualização
+
+inspect -> cameras -> background color -> HSV; troca de HSV para RGB e puxa todos os sliders para a direita (o fundo fica branco)
+inspect -> material -> [aT] Translucent; se o desenho usar transparencia, ela aparece na visualização ao marcar essa caixa
+inspect -> appearance -> [ae] Edges; as arestas ficam visíveis, facilitando visualizar cada Voxel
