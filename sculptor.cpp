@@ -42,8 +42,7 @@ Sculptor::Sculptor(int _nx, int _ny, int _nz)
         }
     }
 
-    cout << "[Sculptor] objeto criado com dimensoes ("
-         << nx << "," << ny << "," << nz << ")\n";
+    cout << "[Construtor] objeto criado com dimensoes (" << nx << "," << ny << "," << nz << ")\n";
 }
 
 // implementacao do destrutor da classe
@@ -67,7 +66,7 @@ Sculptor::~Sculptor()
     // liberacao do eixo x
     delete[] v;
 
-    cout << "[Sculptor] memoria liberada com sucesso\n";
+    cout << "[Destrutor] memoria liberada com sucesso\n";
 }
 
 // define a cor atual do desenho
@@ -87,8 +86,7 @@ void Sculptor::putVoxel(int x, int y, int z)
 {
     if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
     {
-        cout << "[putVoxel] coordenada invalida: ("
-             << x << "," << y << "," << z << ")\n";
+        cout << "[putVoxel] coordenada invalida: (" << x << "," << y << "," << z << ")\n";
         return;
     }
 
@@ -107,13 +105,11 @@ void Sculptor::cutVoxel(int x, int y, int z)
 {
     if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
     {
-        cout << "[cutVoxel] coordenada invalida: ("
-             << x << "," << y << "," << z << ")\n";
+        cout << "[cutVoxel] coordenada invalida: (" << x << "," << y << "," << z << ")\n";
         return;
     }
 
     v[x][y][z].show = false;
 
-    cout << "[cutVoxel] desativado voxel em ("
-         << x << "," << y << "," << z << ")\n";
+    cout << "[cutVoxel] desativado voxel em (" << x << "," << y << "," << z << ")\n";
 }
