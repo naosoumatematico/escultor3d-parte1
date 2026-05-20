@@ -121,6 +121,8 @@ void Sculptor::writeOFF(const char* filename)
     int nVertices = nVoxels*8;
 
     fout << "OFF\n";
+    fout << nVertices << " " << nFaces << " 0\n";
+
     fout.close();
     
 }
