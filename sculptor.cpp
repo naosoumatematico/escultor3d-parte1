@@ -1,7 +1,7 @@
 // arquivo de definicao da classe; aqui ocorre a implementacao dos metodos da classe
 
 #include <fstream> // para criar e escrever no arquivo .off que sera gerado
-#include <cstdlib> // para usar exit(1)
+#include <cstdlib> // para exit()
 #include "sculptor.h" // header da classe sculptor
 
 using namespace std;
@@ -177,13 +177,13 @@ void Sculptor::writeOFF(const char* filename){
                        r, g, b, a sao as cores e opacidade definidas no setColor
                         */
                     fout << 4 << " " << vertice + 0 << " " << vertice + 1 << " " << vertice + 3 << " " << vertice + 2 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].a << "\n";
-                    fout << 4 << " " << vertice + 0 << " " << vertice + 1 << " " << vertice + 5 << " " << vertice + 4 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].b << "\n";
-                    fout << 4 << " " << vertice + 0 << " " << vertice + 2 << " " << vertice + 6 << " " << vertice + 4 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].b << "\n";
-                    fout << 4 << " " << vertice + 3 << " " << vertice + 1 << " " << vertice + 5 << " " << vertice + 7 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].b << "\n";
-                    fout << 4 << " " << vertice + 3 << " " << vertice + 2 << " " << vertice + 6 << " " << vertice + 7 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].b << "\n";
-                    fout << 4 << " " << vertice + 4 << " " << vertice + 5 << " " << vertice + 7 << " " << vertice + 6 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].b << "\n";
+                    fout << 4 << " " << vertice + 0 << " " << vertice + 1 << " " << vertice + 5 << " " << vertice + 4 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].a << "\n";
+                    fout << 4 << " " << vertice + 0 << " " << vertice + 2 << " " << vertice + 6 << " " << vertice + 4 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].a << "\n";
+                    fout << 4 << " " << vertice + 3 << " " << vertice + 1 << " " << vertice + 5 << " " << vertice + 7 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].a << "\n";
+                    fout << 4 << " " << vertice + 3 << " " << vertice + 2 << " " << vertice + 6 << " " << vertice + 7 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].a << "\n";
+                    fout << 4 << " " << vertice + 4 << " " << vertice + 5 << " " << vertice + 7 << " " << vertice + 6 << " " << v[x][y][z].r << " " << v[x][y][z].g << " " << v[x][y][z].b << " " << v[x][y][z].a << "\n";
 
-                    // apos o fim da escrita de um Voxel, vertice eh somado 8 para continuar no proximo voxel
+                    // apos o fim da escrita de um Voxel, eh somado 8 a variavel vertice para continuar no proximo voxel
                     vertice += 8;
                 }
             }
@@ -192,5 +192,4 @@ void Sculptor::writeOFF(const char* filename){
 
     // fecha o arquivo apos fazer todas as alteracoes
     fout.close();
-    
 }
