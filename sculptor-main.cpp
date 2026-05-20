@@ -103,6 +103,7 @@ int main(void){
 
     heart.writeOFF("heart.off");
 
+    // exemplo trono.off
     // cria um escultor cuja matriz tem 10x10x10 voxels
     Sculptor trono(10,10,10);
     // para mudar a cor do voxel
@@ -113,6 +114,23 @@ int main(void){
     trono.cutBox(1,8,1,9,1,9);
     // grava a escultura digital no arquivo "trono.off"
     trono.writeOFF("trono.off");
+
+    // exemplo excultura.off
+    Sculptor escultura(2, 2, 2);
+
+    escultura.setColor(0, 1, 0, 1);
+    escultura.putVoxel(0, 0, 0);
+
+    escultura.setColor(1, 0, 0, 0.8);
+    escultura.putVoxel(1, 0, 0);
+
+    escultura.setColor(0, 0, 1, 1);
+    escultura.putVoxel(0, 1, 0);
+
+    escultura.setColor(1, 1, 0, 0.5);
+    escultura.putVoxel(0, 0, 1);
+
+    escultura.writeOFF("escultura.off");
     
     return 0;
 }
