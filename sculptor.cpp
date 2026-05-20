@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 #include "sculptor.h"
 
 using namespace std;
@@ -95,153 +96,31 @@ void Sculptor::cutBox(int x0, int x1, int y0, int y1, int z0, int z1){
     }
 }
 
-// metodo completamente vibecodado; nao confio nem um pouco (queria so testar os outros metodos visualmente)
+// salva o desenho em um arquivo OFF
 void Sculptor::writeOFF(const char* filename)
 {
-    ofstream fout;
+   ofstream fout;
+   fout.open(filename);
+   if(!fout.is_open()){
+    exit(1);
+   }
 
-    fout.open(filename);
+   int nVoxels = 0;
 
-    if(!fout.is_open())
-    {
-        cout << "[writeOFF] erro ao abrir arquivo" << endl;
-        return;
-    }
-
-    int nvoxels = 0;
-
-    // conta quantos voxels estao ativos
-    for(int i = 0; i < nx; i++)
-    {
-        for(int j = 0; j < ny; j++)
-        {
-            for(int k = 0; k < nz; k++)
-            {
-                if(v[i][j][k].show == true)
-                {
-                    nvoxels++;
+   for(int x = 0; x < nx; x++){
+        for(int y = 0; y < ny; y++){
+            for(int z = 0; z < nz; z++){
+                if(v[x][y][z].show == true){
+                    nVoxels++;
                 }
             }
         }
     }
 
-    int nvertices = nvoxels * 8;
-    int nfaces = nvoxels * 6;
+    int nFaces = nVoxels*6;
+    int nVertices = nVoxels*8;
 
-    // cabecalho OFF
     fout << "OFF\n";
-    fout << nvertices << " " << nfaces << " 0\n";
-
-    // escrita dos vertices
-    for(int i = 0; i < nx; i++)
-    {
-        for(int j = 0; j < ny; j++)
-        {
-            for(int k = 0; k < nz; k++)
-            {
-                if(v[i][j][k].show)
-                {
-                    fout << i-0.5 << " " << j+0.5 << " " << k-0.5 << "\n";
-                    fout << i-0.5 << " " << j-0.5 << " " << k-0.5 << "\n";
-                    fout << i+0.5 << " " << j-0.5 << " " << k-0.5 << "\n";
-                    fout << i+0.5 << " " << j+0.5 << " " << k-0.5 << "\n";
-
-                    fout << i-0.5 << " " << j+0.5 << " " << k+0.5 << "\n";
-                    fout << i-0.5 << " " << j-0.5 << " " << k+0.5 << "\n";
-                    fout << i+0.5 << " " << j-0.5 << " " << k+0.5 << "\n";
-                    fout << i+0.5 << " " << j+0.5 << " " << k+0.5 << "\n";
-                }
-            }
-        }
-    }
-
-    int voxel = 0;
-
-    // escrita das faces
-    for(int i = 0; i < nx; i++)
-    {
-        for(int j = 0; j < ny; j++)
-        {
-            for(int k = 0; k < nz; k++)
-            {
-                if(v[i][j][k].show)
-                {
-                    int base = voxel * 8;
-
-                    fout << "4 "
-                         << base+0 << " "
-                         << base+3 << " "
-                         << base+2 << " "
-                         << base+1
-                         << " "
-                         << v[i][j][k].r << " "
-                         << v[i][j][k].g << " "
-                         << v[i][j][k].b << " "
-                         << v[i][j][k].a << "\n";
-
-                    fout << "4 "
-                         << base+4 << " "
-                         << base+5 << " "
-                         << base+6 << " "
-                         << base+7
-                         << " "
-                         << v[i][j][k].r << " "
-                         << v[i][j][k].g << " "
-                         << v[i][j][k].b << " "
-                         << v[i][j][k].a << "\n";
-
-                    fout << "4 "
-                         << base+0 << " "
-                         << base+1 << " "
-                         << base+5 << " "
-                         << base+4
-                         << " "
-                         << v[i][j][k].r << " "
-                         << v[i][j][k].g << " "
-                         << v[i][j][k].b << " "
-                         << v[i][j][k].a << "\n";
-
-                    fout << "4 "
-                         << base+0 << " "
-                         << base+4 << " "
-                         << base+7 << " "
-                         << base+3
-                         << " "
-                         << v[i][j][k].r << " "
-                         << v[i][j][k].g << " "
-                         << v[i][j][k].b << " "
-                         << v[i][j][k].a << "\n";
-
-                    fout << "4 "
-                         << base+3 << " "
-                         << base+7 << " "
-                         << base+6 << " "
-                         << base+2
-                         << " "
-                         << v[i][j][k].r << " "
-                         << v[i][j][k].g << " "
-                         << v[i][j][k].b << " "
-                         << v[i][j][k].a << "\n";
-
-                    fout << "4 "
-                         << base+1 << " "
-                         << base+2 << " "
-                         << base+6 << " "
-                         << base+5
-                         << " "
-                         << v[i][j][k].r << " "
-                         << v[i][j][k].g << " "
-                         << v[i][j][k].b << " "
-                         << v[i][j][k].a << "\n";
-
-                    voxel++;
-                }
-            }
-        }
-    }
-
     fout.close();
-
-    cout << "[writeOFF] arquivo OFF salvo com sucesso: "
-         << filename << endl;
+    
 }
