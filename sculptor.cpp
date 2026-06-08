@@ -1,39 +1,52 @@
 // arquivo de definicao da classe; aqui ocorre a implementacao dos metodos da classe
 
-#include <fstream> // para criar e escrever no arquivo .off que sera gerado
-#include <cstdlib> // para exit()
+#include <fstream>    // para criar e escrever no arquivo .off que sera gerado
+#include <cstdlib>    // para exit()
 #include "sculptor.h" // header da classe sculptor
 
 using namespace std;
 
 // construtor da classe
-Sculptor::Sculptor(int _nx, int _ny, int _nz){
+Sculptor::Sculptor(int _nx, int _ny, int _nz)
+{
+    // verifica se o tamanho eh valido
+    if (_nx <= 0 || _ny <= 0 || _nz <= 0)
+    {
+        exit(1);
+    }
+
     // definicao das dimensoes da matriz 3D
-	nx = _nx;
-	ny = _ny;
-	nz = _nz;
+    nx = _nx;
+    ny = _ny;
+    nz = _nz;
 
     // alocacao dinamica da matriz
 
-	v = new Voxel**[nx];
-	
-    for(int i = 0; i < nx; i++){
-		v[i] = new Voxel*[ny];
-		for(int j = 0; j < ny; j++){
-			v[i][j] = new Voxel[nz];
-			for(int k = 0; k < nz; k++){
-				v[i][j][k].show = false; // inicialmente os Voxels sao desativados
-			}
-		}
-	}
+    v = new Voxel **[nx];
+
+    for (int i = 0; i < nx; i++)
+    {
+        v[i] = new Voxel *[ny];
+        for (int j = 0; j < ny; j++)
+        {
+            v[i][j] = new Voxel[nz];
+            for (int k = 0; k < nz; k++)
+            {
+                v[i][j][k].show = false; // inicialmente os Voxels sao desativados
+            }
+        }
+    }
 }
 
 // destrutor da classe
-Sculptor::~Sculptor(){
+Sculptor::~Sculptor()
+{
     // como a classe trabalha com alocacao dinamica de memoria, o construtor deve se encarregar de liberar a memoria alocada
     // a liberacao deve ser feita "na ordem contraria" da alocacao, a fim de evitar memory leak
-    for(int i = 0; i < nx; i++){
-        for(int j = 0; j < ny; j++){
+    for (int i = 0; i < nx; i++)
+    {
+        for (int j = 0; j < ny; j++)
+        {
             delete[] v[i][j];
         }
         delete[] v[i];
@@ -44,7 +57,8 @@ Sculptor::~Sculptor(){
 // define a cor atual do desenho
 // this eh usado pois os parametros rgb do argumento tem o mesmo nome que os atributos da classe
 // ou seja, r = r nao faria sentido;
-void Sculptor::setColor(float r, float g, float b, float alpha){
+void Sculptor::setColor(float r, float g, float b, float alpha)
+{
     this->r = r;
     this->g = g;
     this->b = b;
@@ -52,9 +66,11 @@ void Sculptor::setColor(float r, float g, float b, float alpha){
 }
 
 // ativa um voxel nas coordenadas dadas
-void Sculptor::putVoxel(int x, int y, int z){
+void Sculptor::putVoxel(int x, int y, int z)
+{
     // verifica se a coordenada esta dentro dos limites da matriz 3D
-    if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz){
+    if (x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
+    {
         return; // se tentar acessar uma regiao fora da matriz, o metodo nao faz nada
     }
 
@@ -67,9 +83,11 @@ void Sculptor::putVoxel(int x, int y, int z){
 }
 
 // desativa um voxel nas coordenadas dadas
-void Sculptor::cutVoxel(int x, int y, int z){
+void Sculptor::cutVoxel(int x, int y, int z)
+{
     // verifica se a coordenada esta dentro dos limites da matriz 3D
-    if(x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz){
+    if (x < 0 || x >= nx || y < 0 || y >= ny || z < 0 || z >= nz)
+    {
         return; // se tentar acessar uma regiao fora da matriz, o metodo nao faz nada
     }
 
@@ -78,44 +96,154 @@ void Sculptor::cutVoxel(int x, int y, int z){
 }
 
 // ativa os voxels no intervalo dado
-void Sculptor::putBox(int x0, int x1, int y0, int y1, int z0, int z1){
-    for(int x = x0; x <= x1; x++){
-        for(int y = y0; y <= y1; y++){
-            for(int z = z0; z <= z1; z++){
-                putVoxel(x, y, z); // os lacos de repeticao percorrem o intervalo, e ativam o voxel onde for valido chamando o metodo putVoxel
+void Sculptor::putBox(int x0, int x1, int y0, int y1, int z0, int z1)
+{
+    for (int x = x0; x <= x1; x++)
+    {
+        for (int y = y0; y <= y1; y++)
+        {
+            for (int z = z0; z <= z1; z++)
+            {
+                putVoxel(x, y, z); // os lacos de repeticao percorrem o intervalo e ativam o voxel onde for valido chamando o metodo putVoxel
             }
         }
     }
 }
 
 // desativa os voxels no intervalo dado
-void Sculptor::cutBox(int x0, int x1, int y0, int y1, int z0, int z1){
-    for(int x = x0; x <= x1; x++){
-        for(int y = y0; y <= y1; y++){
-            for(int z = z0; z <= z1; z++){
-                cutVoxel(x, y, z); // os lacos de repeticao percorrem o intervalo, e desativam o voxel onde for valido chamando o metodo cutVoxel
+void Sculptor::cutBox(int x0, int x1, int y0, int y1, int z0, int z1)
+{
+    for (int x = x0; x <= x1; x++)
+    {
+        for (int y = y0; y <= y1; y++)
+        {
+            for (int z = z0; z <= z1; z++)
+            {
+                cutVoxel(x, y, z); // os lacos de repeticao percorrem o intervalo e desativam o voxel onde for valido chamando o metodo cutVoxel
+            }
+        }
+    }
+}
+
+// ativa os voxels que satisfazem a equacao da esfera
+void Sculptor::putSphere(int xcenter, int ycenter, int zcenter, int radius)
+{
+    for (int x = xcenter - radius; x <= xcenter + radius; x++)
+    {
+        for (int y = ycenter - radius; y <= ycenter + radius; y++)
+        {
+            for (int z = zcenter - radius; z <= zcenter + radius; z++)
+            {
+                // variaveis auxiliares
+                int dx = (x - xcenter) * (x - xcenter);
+                int dy = (y - ycenter) * (y - ycenter);
+                int dz = (z - zcenter) * (z - zcenter);
+                if (dx + dy + dz <= radius * radius) // testa se o voxel da iteracao atual satisfaz a equacao da esfera
+                {
+                    putVoxel(x, y, z); // os lacos de repeticao percorrem a regiao da esfera e ativam o voxel onde for valido chamando o metodo putVoxel
+                }
+            }
+        }
+    }
+}
+
+// desativa os voxels que satisfazem a equacao da esfera
+void Sculptor::cutSphere(int xcenter, int ycenter, int zcenter, int radius)
+{
+    for (int x = xcenter - radius; x <= xcenter + radius; x++)
+    {
+        for (int y = ycenter - radius; y <= ycenter + radius; y++)
+        {
+            for (int z = zcenter - radius; z <= zcenter + radius; z++)
+            {
+                // variaveis auxiliares
+                int dx = (x - xcenter) * (x - xcenter);
+                int dy = (y - ycenter) * (y - ycenter);
+                int dz = (z - zcenter) * (z - zcenter);
+                if (dx + dy + dz <= radius * radius) // testa se o voxel da iteracao atual satisfaz a equacao da esfera
+                {
+                    cutVoxel(x, y, z); // os lacos de repeticao percorrem a regiao da esfera e desativam o voxel onde for valido chamando o metodo cutVoxel
+                }
+            }
+        }
+    }
+}
+
+// ativa os voxels que satisfazem a equacao do elipsoide
+void Sculptor::putEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)
+{
+    float rx2 = rx * rx;
+    float ry2 = ry * ry;
+    float rz2 = rz * rz;
+    for (int x = xcenter - rx; x <= xcenter + rx; x++)
+    {
+        for (int y = ycenter - ry; y <= ycenter + ry; y++)
+        {
+            for (int z = zcenter - rz; z <= zcenter + rz; z++)
+            {
+                // variaveis auxiliares
+                float dx = ((x - xcenter) * (x - xcenter)) / (rx2);
+                float dy = ((y - ycenter) * (y - ycenter)) / (ry2);
+                float dz = ((z - zcenter) * (z - zcenter)) / (rz2);
+
+                if (dx + dy + dz <= 1) // testa se o voxel da iteracao atual satisfaz a equacao do elipsoide
+                {
+                    putVoxel(x, y, z); // os lacos de repeticao percorrem a regiao do elipsoide e ativam o voxel onde for valido chamando o metodo putVoxel
+                }
+            }
+        }
+    }
+}
+
+// desativa os voxels que satisfazem a equacao do elipsoide
+void Sculptor::cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)
+{
+    float rx2 = rx * rx;
+    float ry2 = ry * ry;
+    float rz2 = rz * rz;
+    for (int x = xcenter - rx; x <= xcenter + rx; x++)
+    {
+        for (int y = ycenter - ry; y <= ycenter + ry; y++)
+        {
+            for (int z = zcenter - rz; z <= zcenter + rz; z++)
+            {
+                // variaveis auxiliares
+                float dx = ((x - xcenter) * (x - xcenter)) / (rx2);
+                float dy = ((y - ycenter) * (y - ycenter)) / (ry2);
+                float dz = ((z - zcenter) * (z - zcenter)) / (rz2);
+
+                if (dx + dy + dz <= 1) // testa se o voxel da iteracao atual satisfaz a equacao do elipsoide
+                {
+                    cutVoxel(x, y, z); // os lacos de repeticao percorrem a regiao do elipsoide e desativam o voxel onde for valido chamando o metodo cutVoxel
+                }
             }
         }
     }
 }
 
 // salva o desenho em um arquivo OFF
-void Sculptor::writeOFF(const char* filename){
-   ofstream fout; // objeto da classe ofstream para escrever no arquivo
-   fout.open(filename); // metodo open tenta abrir o arquivo
-   if(!fout.is_open()){
-    exit(1);
-   }
+void Sculptor::writeOFF(const char *filename)
+{
+    ofstream fout;       // objeto da classe ofstream para escrever no arquivo
+    fout.open(filename); // metodo open tenta abrir o arquivo
+    if (!fout.is_open())
+    {
+        exit(1);
+    }
 
-   // variavel acumuladora inteira para contar o total de voxels no desenho
-   // deve ser inicializada com valor 0 para que o lixo nao interfira na contagem
-   int nVoxels = 0;
+    // variavel acumuladora inteira para contar o total de voxels no desenho
+    // deve ser inicializada com valor 0 para que o lixo nao interfira na contagem
+    int nVoxels = 0;
 
-   // lacos de repeticao aninhados que percorrem toda a matriz 3D contando o total de voxels
-   for(int x = 0; x < nx; x++){
-        for(int y = 0; y < ny; y++){
-            for(int z = 0; z < nz; z++){
-                if(v[x][y][z].show){
+    // lacos de repeticao aninhados que percorrem toda a matriz 3D contando o total de voxels
+    for (int x = 0; x < nx; x++)
+    {
+        for (int y = 0; y < ny; y++)
+        {
+            for (int z = 0; z < nz; z++)
+            {
+                if (v[x][y][z].show)
+                {
                     nVoxels++;
                 }
             }
@@ -128,23 +256,26 @@ void Sculptor::writeOFF(const char* filename){
        8 6 0
        cria um arquivo .off que comporta 8 vertices e 6 faces */
     fout << "OFF\n";
-    fout << nVoxels*8 << " " << nVoxels*6 << " 0\n"; /* como vamos desenhar apenas cubos, multiplicamos nVoxels por 8 para saber o 
-                                                        total de vertices e por 6 para saber o total de faces */
-                                                        
+    fout << nVoxels * 8 << " " << nVoxels * 6 << " 0\n"; /* como vamos desenhar apenas cubos, multiplicamos nVoxels por 8 para saber o
+                                                            total de vertices e por 6 para saber o total de faces */
 
     // escreve uma lista com todos os vertices presentes no desenho
-    for(int x = 0; x < nx; x++){
-        for(int y = 0; y < ny; y++){
-            for(int z = 0; z < nz; z++){
-                if(v[x][y][z].show){ // aqui estou considerando (x, y, z) como a coordenada no centro do voxel
+    for (int x = 0; x < nx; x++)
+    {
+        for (int y = 0; y < ny; y++)
+        {
+            for (int z = 0; z < nz; z++)
+            {
+                if (v[x][y][z].show)
+                { // aqui estou considerando (x, y, z) como a coordenada no centro do voxel
 
                     /* considerando o voxel como sendo 1x1x1 e (x, y, z) como o centro, cada vertice eh deslocado em 0.5 em cada
-                       dimensao com relacao ao seu centro 
+                       dimensao com relacao ao seu centro
                        eh util visualizar como uma tabela verdade
                        cada linha de fout imprime uma linha com as coordenadas de cada um dos vertices
                        a sequencia de fout se repete para cada v[x][y][z].show verdadeiro*/
-                    
-                                                                                 // indices de cada vertice
+
+                    // indices de cada vertice
                     fout << x - 0.5 << " " << y - 0.5 << " " << z - 0.5 << "\n"; // v0
                     fout << x + 0.5 << " " << y - 0.5 << " " << z - 0.5 << "\n"; // v1
                     fout << x - 0.5 << " " << y + 0.5 << " " << z - 0.5 << "\n"; // v2
@@ -165,11 +296,15 @@ void Sculptor::writeOFF(const char* filename){
     // variavel que armazena o indice de cada vertice
     int vertice = 0;
 
-    for(int x = 0; x < nx; x++){
-        for(int y = 0; y < ny; y++){
-            for(int z = 0; z < nz; z++){
-                if(v[x][y][z].show){ // lacos aninhados que percorrem toda a matriz procurando voxels ativos
-                    
+    for (int x = 0; x < nx; x++)
+    {
+        for (int y = 0; y < ny; y++)
+        {
+            for (int z = 0; z < nz; z++)
+            {
+                if (v[x][y][z].show)
+                { // lacos aninhados que percorrem toda a matriz procurando voxels ativos
+
                     /* escrita no arquivo ocorre na forma:
                        nVertices v0 v1 v3 v2 r g b a
                        onde nVertices eh o numero de vertices a serem ligadas para desenhar uma face (no caso dos cubos, sao sempre 4)
