@@ -1,6 +1,4 @@
-// programa de teste para a classe Sculptor. o teste sera feito com 2 desenhos:
-// uma pixel art de coracao tirada do minecraft 
-// o trono.off do site do professor sobre o projeto
+// programa de teste para a classe Sculptor. o teste sera feito com a arte de coracao da barrad de vida do minecraft
 
 #include "sculptor.h"
 
@@ -103,34 +101,5 @@ int main(void){
 
     heart.writeOFF("heart.off");
 
-    // exemplo trono.off
-    // cria um escultor cuja matriz tem 10x10x10 voxels
-    Sculptor trono(10,10,10);
-    // para mudar a cor do voxel
-    trono.setColor(0,0,1.0,1.0); // azul
-    // ativa os voxels na faixa de [x,y,z] pertencendo a [0-9]
-    trono.putBox(0,9,0,9,0,9);
-    // desativa os voxels na faixa de [x,y,z] pertencendo a [0-9]
-    trono.cutBox(1,8,1,9,1,9);
-    // grava a escultura digital no arquivo "trono.off"
-    trono.writeOFF("trono.off");
-
-    // exemplo excultura.off
-    Sculptor escultura(2, 2, 2);
-
-    escultura.setColor(0, 1, 0, 1);
-    escultura.putVoxel(0, 0, 0);
-
-    escultura.setColor(1, 0, 0, 0.8);
-    escultura.putVoxel(1, 0, 0);
-
-    escultura.setColor(0, 0, 1, 1);
-    escultura.putVoxel(0, 1, 0);
-
-    escultura.setColor(1, 1, 0, 0.5);
-    escultura.putVoxel(0, 0, 1);
-
-    escultura.writeOFF("escultura.off");
-    
     return 0;
 }
