@@ -27,7 +27,7 @@ A classe `Sculptor` funciona como uma matriz de coordenadas tridimensionais $(x,
     * **Exemplo:** `Sculptor exemplo(50, 50, 50);` (Cria uma grade de $50 \times 50 \times 50$).
 
 * `void setColor(float r, float g, float b, float alpha)`
-    * **O que faz:** Define a cor que será usada. Todas as funções `put...` chamadas após este comando usarão essa cor. Os valores de RGBA devem variar estritamente entre `0.0` (ausência) e `1.0` (intensidade máxima).
+    Define a cor atual de desenho. Todas as funções `put...` chamadas após este comando usarão essa cor. Os valores de RGBA devem variar estritamente entre `0.0` (ausência) e `1.0` (intensidade máxima).
     * **Exemplo:** `exemplo.setColor(1.0, 0.0, 0.0, 1.0);` (define a cor para vermelho sólido)
     * **Exemplo:** `exemplo.setColor(0.0, 0.0, 1.0, 0.5);` (define a cor para azul transparente)
 
@@ -44,7 +44,7 @@ A classe `Sculptor` funciona como uma matriz de coordenadas tridimensionais $(x,
     * **Exemplo:** `exemplo.cutVoxel(0, 0, 0);` (desativa um voxel em $(0, 0, 0)$)
 
 * `void putBox(int x0, int x1, int y0, int y1, int z0, int z1)`
-    Cria um bloco sólido de voxels ativos no intervalo $x \in [x0, x1]$, $y \in [y0, y1]$, $z \in [z0, z1]$, pintando-os com a cor atual.
+    Ativa todos os voxels no intervalo $x \in [x0, x1]$, $y \in [y0, y1]$, $z \in [z0, z1]$ e atribui aos mesmos a cor atual de desenho.
     * **Exemplo:** `exemplo.putBox(0, 5, 0, 5, 0, 5);` (cria um cubo preenchido de dimensões $6 \times 6 \times 6$ voxels)
 
 * `void cutBox(int x0, int x1, int y0, int y1, int z0, int z1)`
@@ -60,19 +60,19 @@ A classe `Sculptor` funciona como uma matriz de coordenadas tridimensionais $(x,
     * **Exemplo:** `exemplo.cutSphere(10, 10, 10, 3);` (corta/esvazia o interior da esfera gerada anteriormente usando um raio menor)
 
 * `void putEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)`
-    Ativa uma elipsóide sólida tridimensional centralizada no ponto dado, onde `rx`, `ry` e `rz` são os raios nos eixos $x$, $y$ e $z$, respectivamente.
+    Ativa uma elipsoide sólida tridimensional centralizada no ponto dado, onde `rx`, `ry` e `rz` são os raios nos eixos $x$, $y$ e $z$, respectivamente.
     * **Exemplo:** `exemplo.putEllipsoid(20, 20, 20, 5, 3, 2);` (cria uma forma elíptica alongada no eixo X e achatada no eixo Z)
 
 * `void cutEllipsoid(int xcenter, int ycenter, int zcenter, int rx, int ry, int rz)`
-    Remove todos os voxels que pertencem ao volume da elipsóide especificada.
-    * **Exemplo:** `exemplo.cutEllipsoid(20, 20, 20, 5, 3, 2);` (apaga completamente a elipsóide anterior)
+    Remove todos os voxels que pertencem ao volume da elipsoide especificada.
+    * **Exemplo:** `exemplo.cutEllipsoid(20, 20, 20, 5, 3, 2);` (apaga completamente a elipsoide anterior)
 
 ---
 
 ### 3. Exportação do Modelo
 
 * `void writeOFF(const char* filename)`
-    * **O que faz:** Varre toda a matriz tridimensional na memória, calcula quais vértices e faces são necessários para representar os voxels ativos e grava a geometria resultante em um arquivo de texto no formato `.off`.
+    Varre toda a matriz tridimensional na memória, calcula quais vértices e faces são necessários para representar os voxels ativos e grava a geometria resultante em um arquivo de texto no formato `.off`.
     * **Exemplo:** `exemplo.writeOFF("modelo.off");`
     
 O arquivo `sculptor-main.cpp` já possui uma estrutura desenhada. Ela mostra também como estruturas de repetição podem ser usadas para simplificar o desenho. Este mesmo arquivo pode ser posteriormente modificado, a fim de desenhar outras estruturas.
