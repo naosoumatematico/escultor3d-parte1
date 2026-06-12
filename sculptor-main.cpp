@@ -1,25 +1,22 @@
-// programa de teste para a classe Sculptor. o teste sera feito com a arte de coracao da barrad de vida do minecraft
+// programa de teste para a classe Sculptor. o teste sera feito com a arte de coracao da barra de vida do minecraft
 
 #include "sculptor.h"
 
 int main(void){
-    // construtor da classe criando uma matriz do tamanho necessario para uma pixel art de coracao
+    // construtor da classe criando uma matriz do tamanho necessario para a pixel art de coracao
     Sculptor heart(15, 14, 1);
 
     // seta a cor preta para desenhar o contorno
     heart.setColor(0.0, 0.0, 0.0, 1.0);
     
-    // ===============================
     // desenho do contorno do coracao
-    // ===============================
-
     // desenha a subida e a descida da parte inferior em um loop so
     for(int x = 0; x < 7; x++){
         heart.putVoxel(x, 7 - x, 0);
         heart.putVoxel(x + 8, x + 1, 0);
     }
 
-    // desenha a pontinha
+    // desenha a ponta
     heart.putVoxel(7, 0, 0);
 
     // desenha as retas verticais que ligam a parte inferior a superior em um loop so
@@ -41,13 +38,10 @@ int main(void){
     heart.putVoxel(8, 12, 0);
     heart.putVoxel(13, 12, 0);
 
-    // ===============================
-    // pintura do interior do coracao
-    // ===============================
-
     // seta a cor vermelha para o interior do coracao
     heart.setColor(1.0, 0.0, 0.0, 1.0);
 
+    // pintura do interior do coracao
     for(int x = 2; x < 6; x++){
         heart.putVoxel(x, 12, 0);
         heart.putVoxel(x + 7, 12, 0);
@@ -82,10 +76,7 @@ int main(void){
 
     heart.putVoxel(7, 1, 0);
 
-    // ===============================
     // pintura do ponto luminoso no coracao
-    // ===============================
-
     heart.setColor(1.0, 1.0, 1.0, 1.0);
 
     for(int y = 9; y < 11; y++){
@@ -94,11 +85,8 @@ int main(void){
     }
 
     heart.putVoxel(4, 11, 0);
-
-    // ===============================
-    // criacao e salvamento do arquivo .off com o desenho
-    // ===============================
-
+    
+    // criacao do arquivo .off com o desenho
     heart.writeOFF("heart.off");
 
     return 0;
