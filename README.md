@@ -5,7 +5,7 @@ Projeto da segunda unidade da disciplina de Programação Avançada.
 ---
 
 ## Descrição
-Este projeto consiste na implementação da classe Sculptor, um escultor de modelos 3D com Voxels que exporta a figura em formato OFF. As figuras geradas podem ser visualizadas online no site 3dviewer.net, no software meshlab (mais prático para Windows) e no software geomview (mais prático para linux).
+Este projeto consiste na implementação da classe Sculptor, um escultor de modelos 3D com Voxels que exporta a figura em formato OFF. As figuras geradas podem ser visualizadas online no site 3dviewer.net, no software meshlab (mais prático para Windows) e no software geomview (mais prático para Linux).
 
 Informações detalhadas sobre o projeto estão disponíveis em https://agostinhobritojr.github.io/curso/progav-dca0803/escultor.html
 
@@ -13,8 +13,6 @@ Informações detalhadas sobre o projeto estão disponíveis em https://agostinh
 - `sculptor.h`: Declaração da classe `Sculptor`.
 - `sculptor.cpp`: Implementação da classe; responsável pela lógica por trás de cada formato geométrico e do algoritmo de gravação do arquivo OFF.
 - `sculptor-main.cpp`: Código de testes utilizado para criar um modelo tridimensional.
-
----
 
 ---
 
@@ -87,7 +85,7 @@ Como o projeto possui apenas 3 arquivos, ele pode ser compilado facilmente no te
 
 ## Como Visualizar + Dicas de Visualização (Linux)
 
-Após isso, o arquivo proveniente da compilação pode ser executado com ./sculptor-main
+Após isso, o arquivo proveniente da compilação pode ser executado com `./sculptor-main`
 
 Na pasta, surgirá um arquivo .off que pode ser visualizado executando o seguinte comando no terminal:
 
